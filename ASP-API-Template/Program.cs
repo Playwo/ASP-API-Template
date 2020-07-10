@@ -5,12 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using ASP_API_Template.Configuration;
-using ASP_API_Template.Configuration.Options;
-using ASP_API_Template.Extensions;
+using Template.Configuration;
+using Template.Configuration.Options;
+using Template.Extensions;
 using YamlDotNet.Serialization;
 
-namespace ASP_API_Template
+namespace Template
 {
     public class Program
     {

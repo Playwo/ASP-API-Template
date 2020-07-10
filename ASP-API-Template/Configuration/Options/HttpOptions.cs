@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace ASP_API_Template.Configuration
+namespace Template.Configuration
 {
     public class HttpOptions
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ASP_API_Template.Services
+namespace Template.Services
 {
     public sealed class InjectAttribute : Attribute
     {

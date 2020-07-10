@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ASP_API_Template.Extensions
+namespace Template.Extensions
 {
     public static partial class Extensions
     {

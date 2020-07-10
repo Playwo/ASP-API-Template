@@ -4,9 +4,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using ASP_API_Template.Services;
+using Template.Services;
 
-namespace ASP_API_Template.Extensions
+namespace Template.Extensions
 {
     public static partial class Extensions
     {

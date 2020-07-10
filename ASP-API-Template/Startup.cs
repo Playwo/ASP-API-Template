@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ASP_API_Template.Configuration;
-using ASP_API_Template.Configuration.Options;
-using ASP_API_Template.Extensions;
-using ASP_API_Template.Models;
+using Template.Configuration;
+using Template.Configuration.Options;
+using Template.Extensions;
+using Template.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 
-namespace ASP_API_Template
+namespace Template
 {
     public class Startup
     {

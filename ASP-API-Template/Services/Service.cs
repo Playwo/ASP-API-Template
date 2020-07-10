@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ASP_API_Template.Services
+namespace Template.Services
 {
     public abstract class Service
     {

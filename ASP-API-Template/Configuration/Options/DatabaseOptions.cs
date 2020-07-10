@@ -1,4 +1,4 @@
-﻿namespace ASP_API_Template.Configuration.Options
+﻿namespace Template.Configuration.Options
 {
     public class DatabaseOptions
     {

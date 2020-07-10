@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using ASP_API_Template.Services;
+using Template.Services;
 
-namespace ASP_API_Template.Extensions
+namespace Template.Extensions
 {
     public static partial class Extensions
     {
