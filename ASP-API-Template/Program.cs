@@ -35,8 +35,15 @@ namespace Template
 
                     webBuilder.ConfigureKestrel((context, options) =>
                     {
-                        var serverOptions = options.ApplicationServices.GetService<IOptionsMonitor<HttpOptions>>().CurrentValue;
-                        options.Listen(serverOptions.GetAddress(), serverOptions.Port);
+                        var httpOptions = options.ApplicationServices.GetService<IOptionsMonitor<HttpOptions>>().CurrentValue;
+                        options.Listen(httpOptions.GetAddress(), httpOptions.Port, listenOptions =>
+                        {
+                            if (httpOptions.Https)
+                            {
+                                listenOptions.UseHttps();
+                            }
+                        });
+
                     });
                 })
                 .ConfigureAppConfiguration((context, config) =>
