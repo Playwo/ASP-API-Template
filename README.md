@@ -9,7 +9,7 @@
 - DI Service System
   - Service Class (Every Child Class is automatically added to DI)
   - Inject Attribute (All members with that Attribute will be populated using DI)
-  - 
+
 ## Save Setup Time
 Using this template you will save minutes every time you create a new API Application.
 The features contained in this template will be useful in basically every Web API you'll ever create!
