@@ -10,7 +10,7 @@ namespace Template.Extensions
 {
     public static partial class Extensions
     {
-        public static async Task InitializeServicesAsync(this IServiceProvider provider)
+        public static async Task InitializeApplicationServicesAsync(this IServiceProvider provider)
         {
             var serviceTypes = Assembly.GetEntryAssembly().GetServiceTypes();
             var loggerFactory = provider.GetRequiredService<ILoggerFactory>();

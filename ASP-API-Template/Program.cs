@@ -19,7 +19,7 @@ namespace Template
         {
             var webHost = CreateHostBuilder(args).Build();
 
-            await webHost.Services.InitializeServicesAsync();
+            await webHost.Services.InitializeApplicationServicesAsync();
 
             await webHost.StartAsync();
             await webHost.WaitForShutdownAsync();
