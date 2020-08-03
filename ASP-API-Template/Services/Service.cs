@@ -5,9 +5,9 @@ namespace Template.Services
     public abstract class Service
     {
         public virtual ValueTask InitializeAsync()
-            => new ValueTask();
+            => default;
 
         public virtual ValueTask RunAsync()
-            => new ValueTask();
+            => default;
     }
 }
