@@ -5,7 +5,7 @@ namespace Template.Extensions
 {
     public static partial class Extensions
     {
-        public static void AddApplicationServices(this IServiceCollection collection)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection collection)
         {
             var serviceTypes = Assembly.GetExecutingAssembly().GetServiceTypes();
 
@@ -13,6 +13,8 @@ namespace Template.Extensions
             {
                 collection.AddSingleton(type);
             }
+
+            return collection;
         }
     }
 }
