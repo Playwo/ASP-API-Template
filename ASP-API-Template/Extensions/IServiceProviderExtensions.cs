@@ -36,5 +36,17 @@ namespace Template.Extensions
                 await service.InitializeAsync();
             }
         }
+
+        public static async Task RunApplicationServicesAsync(this IServiceProvider provider)
+        {
+            var serviceTypes = Assembly.GetEntryAssembly().GetServiceTypes();
+
+            foreach (var serviceType in serviceTypes)
+            {
+                var service = provider.GetRequiredService(serviceType) as Service;
+
+                await service.RunAsync();
+            }
+        }
     }
 }

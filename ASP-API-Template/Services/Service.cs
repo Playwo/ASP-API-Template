@@ -6,5 +6,8 @@ namespace Template.Services
     {
         public virtual ValueTask InitializeAsync()
             => new ValueTask();
+
+        public virtual ValueTask RunAsync()
+            => new ValueTask();
     }
 }
