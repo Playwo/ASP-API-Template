@@ -67,7 +67,7 @@ namespace Template
                     Database = DatabaseOptions.Default,
                 });
 
-                File.WriteAllText(path, defaultConfig); ;
+                File.WriteAllText(path, defaultConfig);
             }
         }
     }
