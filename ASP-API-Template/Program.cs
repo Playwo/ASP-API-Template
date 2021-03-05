@@ -4,22 +4,44 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Template.Configuration;
-using Template.Configuration.Options;
-using Template.Extensions;
 using YamlDotNet.Serialization;
+using Common.Extensions;
+using System.Reflection;
+using System;
+using Common.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Template
 {
     public class Program
     {
+        public const string ConfigPath = "config.yaml";
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006")]
         public static async Task Main(string[] args)
         {
-            var webHost = CreateHostBuilder(args).Build();
+            bool generatedConfig = await TryCreateConfigAsync(ConfigPath);
 
-            await webHost.Services.InitializeApplicationServicesAsync();
+            var webHost = CreateHostBuilder(args).Build();
+            var logger = webHost.Services.GetRequiredService<ILogger<Startup>>();
+            var assembly = Assembly.GetExecutingAssembly();
+
+            if (generatedConfig)
+            {
+                logger.LogInformation($"Generated config file: {Path.Combine(Environment.CurrentDirectory, ConfigPath)}");
+                // return;
+            }
+
+            var validationResult = await webHost.Services.ValidateOptionsAsync(assembly);
+
+            if (!validationResult.IsSuccessful)
+            {
+                logger.LogError($"Config Validation failed: {validationResult.Reason}");
+            }
+
+            await webHost.Services.InitializeApplicationServicesAsync(assembly);
+            webHost.Services.RunApplicationServices(assembly);        
 
             await webHost.StartAsync();
             await webHost.WaitForShutdownAsync();
@@ -35,7 +57,7 @@ namespace Template
 
                     webBuilder.ConfigureKestrel((context, options) =>
                     {
-                        var httpOptions = options.ApplicationServices.GetService<IOptionsMonitor<HttpOptions>>().CurrentValue;
+                        var httpOptions = options.ApplicationServices.GetService<HttpOptions>();
                         options.Listen(httpOptions.GetAddress(), httpOptions.Port, listenOptions =>
                         {
                             if (httpOptions.Https)
@@ -48,27 +70,21 @@ namespace Template
                 })
                 .ConfigureAppConfiguration((context, config) =>
                 {
-                    string path = $"{context.HostingEnvironment.EnvironmentName}.config.yaml";
-
-                    TryCreateConfig(path);
-
                     config.Sources.Clear();
                     config.AddJsonFile("appsettings.json", false);
-                    config.AddYamlFile(path, false);
                 });
 
-        public static void TryCreateConfig(string path)
+        public static async Task<bool> TryCreateConfigAsync(string path)
         {
-            if (!File.Exists(path))
+            if (File.Exists(path))
             {
-                string defaultConfig = new Serializer().Serialize(new
-                {
-                    Http = HttpOptions.Default,
-                    Database = DatabaseOptions.Default,
-                });
-
-                File.WriteAllText(path, defaultConfig);
+                return false;
             }
+
+            object config = Option.GenerateDefaultOptions();
+            string defaultConfig = new Serializer().Serialize(config);
+            await File.WriteAllTextAsync(path, defaultConfig);
+            return true;
         }
     }
 }

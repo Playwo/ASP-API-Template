@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Template.Configuration;
-using Template.Configuration.Options;
-using Template.Extensions;
 using Template.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using Common.Extensions;
+using System.Reflection;
+using Template.Configuration;
 
 namespace Template
 {
@@ -24,7 +24,7 @@ namespace Template
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationServices();
+            services.AddApplication(Configuration, Assembly.GetExecutingAssembly());
 
             services.AddDbContext<AppDbContext>((provider, options) =>
             {
@@ -32,11 +32,6 @@ namespace Template
                 string connectionString = dbOptions.CurrentValue.BuildConnectionString();
                 options.UseNpgsql(connectionString);
             });
-
-            services.AddOptions<HttpOptions>()
-                .Bind(Configuration.GetSection("Http"));
-            services.AddOptions<DatabaseOptions>()
-                .Bind(Configuration.GetSection("Database"));
 
             services.AddControllers();
         }

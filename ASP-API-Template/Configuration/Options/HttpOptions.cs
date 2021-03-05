@@ -1,8 +1,9 @@
 ﻿using System.Net;
+using Common.Configuration;
 
 namespace Template.Configuration
 {
-    public class HttpOptions
+    public class HttpOptions : Option
     {
         public string Address { get; set; } = "127.0.0.1";
         public int Port { get; set; } = 10000;
@@ -10,9 +11,5 @@ namespace Template.Configuration
 
         public IPAddress GetAddress()
             => IPAddress.Parse(Address);
-
-        public static HttpOptions Default
-            => new HttpOptions();
-
     }
 }
